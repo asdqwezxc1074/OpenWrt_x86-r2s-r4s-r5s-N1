@@ -110,7 +110,7 @@
 +		BUILD_PACKAGES += -coremark -htop -bash -openssh-sftp-server
 +	endif
 +	ifeq ($(shell grep -q small_flash $(TOPDIR)/repositories.conf || echo "not_found"),not_found)
-+		$(shell echo "`grep kwrt_kiddin9 $(TOPDIR)/repositories.conf | sed -e 's/kiddin9/small_flash/g'`" >>$(TOPDIR)/repositories.conf)
++        $(shell echo "`grep kwrt_kiddin9 $(TOPDIR)/repositories.conf | sed -e 's/kiddin9/small_flash/g'`" >>$(TOPDIR)/repositories.conf)
 +	endif
 +	ifneq ($(findstring /data/bcache/,$(BIN_DIR)),)
 +		BUILD_PACKAGES += -luci-app-homeproxy -luci-app-istorex -luci-theme-argon
