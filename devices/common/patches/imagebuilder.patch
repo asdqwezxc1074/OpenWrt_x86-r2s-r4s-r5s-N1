@@ -93,12 +93,12 @@
  BUILD_PACKAGES:=$(USER_PACKAGES) $(BUILD_PACKAGES)
 +IMAGE_SIZE_VALUE := $($(USER_PROFILE)_IMAGE_SIZE)
 +ifdef IMAGE_SIZE_VALUE
-+  ifeq ($(shell test $(IMAGE_SIZE_VALUE) -lt 35840 && echo true),true)
-+    SMALL_FLASH := true
-+  endif
-+  ifeq ($(shell test $(IMAGE_SIZE_VALUE) -lt 20480 && echo true),true)
-+    XSMALL_FLASH := true
-+  endif
++	ifeq ($(shell test $(IMAGE_SIZE_VALUE) -lt 35840 && echo true),true)
++		SMALL_FLASH := true
++	endif
++	ifeq ($(shell test $(IMAGE_SIZE_VALUE) -lt 20480 && echo true),true)
++		XSMALL_FLASH := true
++	endif
 +endif
 +ifneq ($(findstring usb,$(BUILD_PACKAGES)),)
 +	ifneq ($(XSMALL_FLASH),true)
@@ -108,15 +108,15 @@
 +ifeq ($(SMALL_FLASH),true)
 +	ifeq ($(XSMALL_FLASH),true)
 +		BUILD_PACKAGES += -coremark -htop -bash -openssh-sftp-server
-+		ifeq ($(shell grep -q small_flash $(TOPDIR)/repositories.conf || echo "not_found"),not_found)
-+			$(shell echo "`grep kwrt_kiddin9 $(TOPDIR)/repositories.conf | sed -e 's/kiddin9/small_flash/g'`" >>$(TOPDIR)/repositories.conf)
-+		endif
++	endif
++	ifeq ($(shell grep -q small_flash $(TOPDIR)/repositories.conf || echo "not_found"),not_found)
++		$(shell echo "`grep kwrt_kiddin9 $(TOPDIR)/repositories.conf | sed -e 's/kiddin9/small_flash/g'`" >>$(TOPDIR)/repositories.conf)
 +	endif
 +	ifneq ($(findstring /data/bcache/,$(BIN_DIR)),)
 +		BUILD_PACKAGES += -luci-app-homeproxy -luci-app-istorex -luci-theme-argon
-+    endif
++	endif
 +else
-+    $(shell sed -i "/small_flash/d" $(TOPDIR)/repositories.conf)
++	$(shell sed -i "/small_flash/d" $(TOPDIR)/repositories.conf)
 +endif
 +define add_zh_cn_packages
 +$(eval BUILD_PACKAGES += $(foreach pkg,$(BUILD_PACKAGES),$(if $(and $(filter luci-app-%,$(pkg)),$(shell $(OPKG) list | grep -q "^luci-i18n-$(patsubst luci-app-%,%,$(pkg))-zh-cn" && echo 1)),luci-i18n-$(patsubst luci-app-%,%,$(pkg))-zh-cn)))
