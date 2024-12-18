@@ -116,7 +116,7 @@
 +		BUILD_PACKAGES += -luci-app-homeproxy -luci-app-istorex -luci-theme-argon
 +	endif
 +else
-+	$(shell sed -i "/small_flash/d" $(TOPDIR)/repositories.conf)
++        $(shell sed -i "/small_flash/d" $(TOPDIR)/repositories.conf)
 +endif
 +define add_zh_cn_packages
 +$(eval BUILD_PACKAGES += $(foreach pkg,$(BUILD_PACKAGES),$(if $(and $(filter luci-app-%,$(pkg)),$(shell $(OPKG) list | grep -q "^luci-i18n-$(patsubst luci-app-%,%,$(pkg))-zh-cn" && echo 1)),luci-i18n-$(patsubst luci-app-%,%,$(pkg))-zh-cn)))
@@ -166,7 +166,7 @@
  endif
  	$(call prepare_rootfs,$(TARGET_DIR),$(USER_FILES),$(DISABLED_SERVICES))
 +	$(if $(SMALL_FLASH), \
-+		$(shell echo "`grep kwrt_kiddin9 $(TOPDIR)/repositories.conf | sed -e 's/kiddin9/small_flash/g'`" >>$(BUILD_DIR)/root-*/etc/opkg/distfeeds.conf) \
++        $(shell echo "`grep kwrt_kiddin9 $(TOPDIR)/repositories.conf | sed -e 's/kiddin9/small_flash/g'`" >>$(BUILD_DIR)/root-*/etc/opkg/distfeeds.conf) \
 +	)
  
  build_image: FORCE
